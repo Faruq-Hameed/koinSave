@@ -6,19 +6,12 @@ const ErrorTexts: React.FC<{ style?: ViewStyle; message: string }> = ({
   style,
   message,
 }) => {
-  return (
-    <View style={[styles.container, style]}>
-      <Text style={styles.textColor}>{message}</Text>
-    </View>
-  );
+  return <Text style={styles.textColor}>{message}</Text>;
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 20,
-  },
   textColor: {
-    marginTop: -8,
+    // marginTop: -8,
     color: "#CC0000",
     fontSize: 12,
   },

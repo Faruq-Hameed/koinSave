@@ -1,14 +1,14 @@
 import React from "react";
 
 import { View, StyleSheet, Image, Text } from "react-native";
-import FormInput from "../components/FormInput";
+import FormInput from "../../components/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
-import AuthHeaderBox from "../components/AuthHeaderBox";
-import AuthBottomTexts from "../components/AuthBottomText";
+import AuthHeaderBox from "../../components/AuthHeaderBox";
+import AuthBottomTexts from "../../components/AuthBottomText";
 import { Formik } from "formik";
-import { SignUpSchema } from "../Schemas/userSchema";
-import ErrorTexts from "../components/ErrorTexts";
-import Button from "../components/Button";
+import { SignUpSchema } from "../../Schemas/userSchema";
+import ErrorTexts from "../../components/ErrorTexts";
+import Button from "../../components/Button";
 
 const SignUpScreen: React.FC = () => {
   return (

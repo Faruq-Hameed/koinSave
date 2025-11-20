@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import RootStackNavigator from "./src/Navigations/RootNavigator";
+import { UserProvider } from "./src/contexts/UserContext";
 
 export default function App() {
   return (
@@ -9,9 +10,11 @@ export default function App() {
     //   source={require("./assets/splash-icon.png")}
     //   style={{ width: 100, height: 100 }}
     // />
-    <NavigationContainer>
-      <RootStackNavigator />
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <RootStackNavigator />
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 

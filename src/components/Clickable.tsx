@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-const Clickable: React.FC<{
+const ClickableText: React.FC<{
   label: string;
   onPress: () => void;
 }> = ({ label, onPress }) => {
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Clickable;
+export default ClickableText;

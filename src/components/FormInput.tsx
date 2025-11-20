@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, Button } from "react-native";
+import ErrorTexts from "./ErrorTexts";
 
 /**This is a reusable input component for forms. 
 It accepts label, value, placeholder, onChangeText handler, and keyboardType as props.
@@ -14,6 +15,7 @@ const FormInput: React.FC<{
   onBlur: (e: any) => void; //purposefully added for formik compatibility. With this prop, formik can handle the blur event.
   onFocus: (e: any) => void;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
+  errorMessage?: string;
 }> = ({
   label,
   value,
@@ -22,6 +24,7 @@ const FormInput: React.FC<{
   onFocus,
   keyboardType = "default",
   placeholder = "type here",
+  errorMessage = "",
 }) => {
   const [focus, setFocus] = useState(false);
 
@@ -44,6 +47,7 @@ const FormInput: React.FC<{
           setFocus(!!focus); //so the green color border appears
         }}
       />
+      {errorMessage && <ErrorTexts message={errorMessage} />}
     </View>
   );
 };

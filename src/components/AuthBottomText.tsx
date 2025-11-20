@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Clickable from "./Clickable";
+import ClickableText from "./Clickable";
 
 /** A component that displays bottom texts for authentication screens 
- it has a clickable link to switch between login and signup screens.
+ it has a ClickableText link to switch between login and signup screens.
  */
 const AuthBottomTexts: React.FC<{ isLogin?: boolean }> = ({
   isLogin = true,
@@ -16,7 +16,7 @@ const AuthBottomTexts: React.FC<{ isLogin?: boolean }> = ({
       {isLogin ? (
         <Text style={styles.text}>
           Don't have an account?{" "}
-          <Clickable
+          <ClickableText
             label="Sign Up"
             onPress={() => navigation.navigate("SignUp")}
           />
@@ -24,7 +24,7 @@ const AuthBottomTexts: React.FC<{ isLogin?: boolean }> = ({
       ) : (
         <Text style={styles.text}>
           Already have an account?{" "}
-          <Clickable
+          <ClickableText
             label="Sign In"
             onPress={() => navigation.navigate("Login")}
           />
