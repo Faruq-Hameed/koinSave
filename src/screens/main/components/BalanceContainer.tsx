@@ -22,7 +22,7 @@ const BalanceContainer: React.FC<{ balance: string }> = ({ balance }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={[styles.balance, styles.text]}>
+        <Text style={styles.balance}>
           {isUsd ? "$" : "₦"} {isUsd ? usdAmount : `${nairaAmount.toFixed(2)}`}
         </Text>
         <Text style={[styles.text, styles.rate]}>
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
   },
   balance: {
     fontWeight: "700",
-    // alignSelf: "center",
+    fontSize: 34,
+    color: "white",
     marginVertical: 5,
     padding: 5,
     borderRadius: 10,

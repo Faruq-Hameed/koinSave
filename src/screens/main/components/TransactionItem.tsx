@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import ArrowCircle from "../../../components/ArrowCircle";
 
 type Transaction = {
   id: string;
@@ -18,6 +19,8 @@ const TransactionItem: React.FC<{ transaction: Transaction }> = ({
 
   return (
     <View style={styles.itemContainer}>
+      <ArrowCircle isArrowUp={isCredit} size={30}/>
+
       <View style={styles.textBlock}>
         <Text style={styles.description}>{transaction.description}</Text>
         <Text style={styles.date}>{transaction.date}</Text>
@@ -33,9 +36,13 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 10,
+    padding: 10,
     borderBottomWidth: 1,
-    borderColor: "#eee",
+    // borderColor: "#d60e0eff",
+    borderColor: "#19942cff",
+    backgroundColor: "white",
+borderRadius: 5,
+
   },
   textBlock: {
     flexDirection: "column",

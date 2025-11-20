@@ -6,7 +6,7 @@ import ArrowCircle from "../../../components/ArrowCircle";
 const Action: React.FC<{ isSend: boolean, onPress: ()=>void }> = ({ isSend = true, onPress }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <ArrowCircle isArrowUp={!isSend} />
+      <ArrowCircle isArrowUp={isSend} />
       <Text style={styles.text}>{isSend ? "Send Money" : "Add Money"} </Text>
     </TouchableOpacity>
   );
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    width: "50%",
+
     // Android shadow
     elevation: 5,
   },

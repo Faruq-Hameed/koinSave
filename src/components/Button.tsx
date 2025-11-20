@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Text,
-  View,
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
@@ -11,23 +10,31 @@ type ButtonProps = {
   onPress: () => void;
   title: string;
   loading?: boolean;
+  bgColor?: string;
+  marginTop?: number;
+  color?:string
+  disable?: boolean
 };
 
 const Button: React.FC<ButtonProps> = ({
   onPress,
   title,
   loading = false,
+  bgColor = "green",
+  marginTop=20,
+  color="white",
+  disable=false,
 }) => {
   return (
     <TouchableOpacity
-      style={styles.button}
+      style={[styles.button, { backgroundColor: bgColor, marginTop }]}
       onPress={onPress}
-      disabled={loading}
+      disabled={disable}
     >
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, {color: color}]}>{title}</Text>
       )}
     </TouchableOpacity>
   );
@@ -35,14 +42,13 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "green",
+    // backgroundColor: "green",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
     alignItems: "center",
     width: "90%",
     margin: "auto",
-    marginVertical: 20,
   },
   title: {
     fontWeight: "bold",

@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import DashboardHeader from "./DashboardHeader";
 import BalanceContainer from "./BalanceContainer";
 import { useUser } from "../../../hooks/useUser";
@@ -10,13 +10,17 @@ const UpperContainer: React.FC = () => {
   const {
     user: { firstName, lastName, balance },
   } = useUser();
-  console.log({ firstName });
   return (
-    <>
+    <View style={styles.container}>
       <DashboardHeader firstName={firstName} lastName={lastName} />
       <BalanceContainer balance={balance} />
-    </>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    padding : 15,
+  }
+})
 export default UpperContainer;

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
+/**Clickable text component */
 const ClickableText: React.FC<{
   label: string;
   onPress: () => void;

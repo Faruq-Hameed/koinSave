@@ -4,13 +4,21 @@ import { StyleSheet, View } from "react-native";
 import DashboardHeader from "./DashboardHeader";
 import BalanceContainer from "./BalanceContainer";
 import Action from "./Action";
+import { useNavigation } from "@react-navigation/native";
+import Spacer from "../../../components/Spacer";
 
 /**Dashboard Middle container  */
 const MiddleContainer: React.FC = () => {
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.container}>
-      <Action isSend />
-      <Action isSend={false} />
+      <Action isSend onPress={() => navigation.navigate("SendMoney")} />
+      <Action
+        isSend={false}
+        onPress={() => {
+          navigation.navigate("AddMoney")
+        }}
+      />
     </View>
   );
 };
@@ -18,15 +26,14 @@ const MiddleContainer: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    columnGap : 10,
-    // borderWidth: 1,
+    columnGap: 20,
     width: "85%",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignSelf: "center",
   },
-  actionContainer:{
-    backgroundColor: "#fafafaff"
-  }
-})
+  actionContainer: {
+    backgroundColor: "#fafafaff",
+  },
+});
 
 export default MiddleContainer;

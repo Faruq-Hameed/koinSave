@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
   },
 
   greenBg: {
-    // backgroundColor: "green",
-    backgroundColor: "white",
+    backgroundColor: "#c9f0b5",
 
   },
 
   redBg: {
-    backgroundColor: "white",
+    backgroundColor: "#faddc6ff",
+
   },
 });
 
