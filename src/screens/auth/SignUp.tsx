@@ -9,8 +9,24 @@ import { Formik } from "formik";
 import { SignUpSchema } from "../../Schemas/userSchema";
 import ErrorTexts from "../../components/ErrorTexts";
 import Button from "../../components/Button";
+import { signup } from "../../api/auth";
+import { User } from "../../model/User";
+import { useUser } from "../../hooks/useUser";
+import { storeUserData } from "../../utils/storage";
 
 const SignUpScreen: React.FC = () => {
+  const {setUser} = useUser()
+  const handleSignup = async (data: Partial<User>) => {
+    try {
+      const res = await signup(data);
+      await storeUserData({...res.user, ...res.token})
+      setUser({...res.data})//this will caused stack switch to dashboard
+      alert("Signup success!");
+
+    } catch (err: any) {
+      alert(err.response?.data?.msg || "Signup failed");
+    }
+  };
   return (
     <SafeAreaView>
       <AuthHeaderBox isLogin={false} />
@@ -23,8 +39,7 @@ const SignUpScreen: React.FC = () => {
         }}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          console.log("signup api called");
-          // initiateSignUp(values);
+          handleSignup(values )
         }}
       >
         {({
@@ -70,22 +85,21 @@ const SignUpScreen: React.FC = () => {
             {touched.email && errors.email && (
               <ErrorTexts message={errors.email} />
             )}
-            <FormInput
-              label="Passcode"
-              placeholder="Enter 6 digit passcode"
-              onChangeText={(text) => {
-                console.log(text);
-              }}
-              value={values.passcode}
-              keyboardType="phone-pad"
-              onBlur={handleBlur("passcode")}
-              onFocus={() => {}}
-            />
+              <FormInput
+                label="Passcode"
+                value={values.passcode}
+                placeholder="Enter your passcode"
+                onChangeText={handleChange("passcode")}
+                onBlur={handleBlur("passcode")}
+                onFocus={() => {}}
+                keyboardType="phone-pad"
+                errorMessage={
+                  touched.passcode && errors.passcode ? errors.passcode : ""
+                }
+              />
             <Button
               title="Sign Up"
-              onPress={() => {
-                console.log("Button submitted");
-              }}
+              onPress={handleSubmit}
             />
           </View>
         )}

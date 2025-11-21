@@ -5,13 +5,15 @@ import { User } from "../model/User";
 type UserContextType = {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
+  resetUser: ()=>void;
 };
 
 //Default user just placeholder actually
 const defaultUser: User = {
-  firstName: "Faruq",
-  lastName: "Hameed",
-  balance: "7000",
+  firstName: "",
+  email: "",
+  lastName: "",
+  balance: "0.00",
   token: "",
 };
 
@@ -19,9 +21,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser);
+  const resetUser = ()=> setUser(defaultUser);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, resetUser }}>
       {children}
     </UserContext.Provider>
   );

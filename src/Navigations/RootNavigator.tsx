@@ -30,7 +30,7 @@ export default function RootStackNavigator() {
         console.log("User:", user);
       };
       init();
-    }, []);
+    }, [user]);
 
     return (
       <View>
@@ -53,7 +53,7 @@ export default function RootStackNavigator() {
   //Render the appropriate stack based on auth state
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
+      {!user.token ? (
         <RootStack.Screen name="AuthStack" component={AuthNavigator} />
       ) : (
         <RootStack.Screen name="MainStack" component={MainNavigator} />

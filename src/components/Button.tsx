@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 type ButtonProps = {
-  onPress: () => void;
+  onPress: (e?: any) => void;
   title: string;
   loading?: boolean;
   bgColor?: string;

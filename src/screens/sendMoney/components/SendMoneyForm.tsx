@@ -6,8 +6,38 @@ import FormInput from "../../../components/FormInput";
 import { SendMoneySchema } from "../../../Schemas/sendMoneySchema";
 import Button from "../../../components/Button";
 import SendMoneySummary from "./SendMoneySummary";
+import { sendMoney } from "../../../api/transactions";
+import { useUser } from "../../../hooks/useUser";
+import { getMe } from "../../../api/auth";
+import { User } from "../../../model/User";
+import { storeUserData } from "../../../utils/storage";
 
 const SendMoneyForm: React.FC = () => {
+  const {
+    user: { token },
+    setUser
+  } = useUser();
+
+  const handleSend = async (data: any) => {
+    try {
+      await sendMoney(token, data);
+      const res = await getMe(data);
+      const user: User = {
+        firstName: res.user.firstName,
+        lastName: res.user.lastName,
+        balance: res.user.balance,
+        email: res.user.email,
+        token: res.token as string,
+      };
+      await storeUserData(user);
+      setUser(user); //so the current balance can be used
+
+      alert("Sent successfully!");
+    } catch (e: any) {
+      alert(e.response?.data?.msg || "Send failed");
+    }
+  };
+
   return (
     <View>
       <Formik
@@ -19,7 +49,7 @@ const SendMoneyForm: React.FC = () => {
         validationSchema={SendMoneySchema}
         onSubmit={(values) => {
           console.log("send api called");
-          // initiateSignUp(values);
+          handleSend(values);
         }}
       >
         {({
@@ -76,9 +106,7 @@ const SendMoneyForm: React.FC = () => {
             />
             <Button
               title="Cancel"
-              onPress={() => {
-                console.log("cancel button submitted");
-              }}
+              onPress={handleSubmit}
               marginTop={20}
               bgColor="white"
               color="black"

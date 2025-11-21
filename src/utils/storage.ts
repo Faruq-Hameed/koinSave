@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User } from "../model/User";
 
 export const storeUserData = async (user: User) => {
+  // console.log({user})
   try {
     await AsyncStorage.setItem("userToken", user.token);
     await AsyncStorage.setItem("userFirstName", user.firstName);

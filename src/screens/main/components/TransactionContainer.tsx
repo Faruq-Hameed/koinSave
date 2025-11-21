@@ -77,7 +77,7 @@ const transactions = [
 const TransactionContainer: React.FC<{ isFullScreen?: boolean }> = ({
   isFullScreen = false,
 }) => {
-  const [showAll, setShowAll] = useState(false);
+  // const [showAll, setShowAll] = useState(false);
   const navigation = useNavigation<any>();
 
   // Sort only once unless transactions change
@@ -87,14 +87,13 @@ const TransactionContainer: React.FC<{ isFullScreen?: boolean }> = ({
     );
   }, [transactions]);
 
-  const dataToShow =
-    showAll || isFullScreen
-      ? sortedTransactions
-      : sortedTransactions.slice(0, 3);
+  const dataToShow = isFullScreen
+    ? sortedTransactions
+    : sortedTransactions.slice(0, 3);
 
-  const toggleShowAll = useCallback(() => {
-    setShowAll((prev) => !prev);
-  }, []);
+  // const toggleShowAll = useCallback(() => {
+  //   setShowAll((prev) => !prev);
+  // }, []);
 
   return (
     <FlatList
@@ -107,13 +106,11 @@ const TransactionContainer: React.FC<{ isFullScreen?: boolean }> = ({
           <Text style={styles.descriptionTexts}>Your Transactions</Text>
           {!isFullScreen && ( //only show if not full screen
             <ClickableText
-              label={showAll ? "See recent" : "See all"}
+              label={"See all"}
               onPress={() => {
-                if (isFullScreen) {
-                  navigation.navigate("Transactions");
-                } else {
-                  toggleShowAll();
-                }
+                // if (isFullScreen) {
+                navigation.navigate("Transactions");
+                // }
               }}
             />
           )}

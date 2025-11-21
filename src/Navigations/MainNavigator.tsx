@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "../screens/main";
-import SendMoneyScreen from "../screens/sendMoney/Index";
+import SendMoneyScreen from "../screens/sendMoney/";
 import AddMoneyScreen from "../screens/AddMoney";
 import TransactionScreen from "../screens/TransactionsScreen";
 

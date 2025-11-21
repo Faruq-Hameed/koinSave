@@ -1,15 +1,17 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, StyleSheet } from "react-native";
 import SendMoneyHeader from "./components/SendMoneyHeader";
 import SendMoneyForm from "./components/SendMoneyForm";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { MainStackParamList } from "../../Navigations/MainNavigator";
 
-const SendMoneyScreen: React.FC = () => {
+type Props = NativeStackScreenProps<MainStackParamList, "SendMoney">;
+
+const SendMoneyScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <SendMoneyHeader />
+      <SendMoneyHeader goBack={() => navigation.goBack()} />
       <SendMoneyForm />
-      
     </SafeAreaView>
   );
 };
