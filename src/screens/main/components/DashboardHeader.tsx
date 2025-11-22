@@ -1,5 +1,7 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import KoinSaveLogo from "../../../components/KoinSaveLogo";
+import LogoutModal from "../../../components/Logout";
 
 /**This is the upper part of the dashboard. 
 Contain the greeting and user avatar created from firstname 
@@ -8,15 +10,19 @@ const DashboardHeader: React.FC<{ firstName: string; lastName: string }> = ({
   firstName,
   lastName,
 }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.container}>
+      {modalVisible && (
+        <LogoutModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
       <Text style={styles.greetings}>Hello {firstName}</Text>
-      <Image
-        source={require("../../../../assets/koinsave.png")}
-        style={{ width: 100, height: 30 }}
-        resizeMode="contain"
-      />
-      <Text style={styles.avatar}>{firstName[0] + " " + lastName[0]}</Text>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Text style={styles.avatar}>{firstName[0] + " " + lastName[0]}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -36,8 +42,7 @@ const styles = StyleSheet.create({
   },
   greetings: {
     fontWeight: "700",
-    color: "white"
-
+    color: "white",
   },
   avatar: {
     borderRadius: 50,
@@ -47,7 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#38ab4aff",
     color: "white",
     fontWeight: "700",
-    
   },
 });
 

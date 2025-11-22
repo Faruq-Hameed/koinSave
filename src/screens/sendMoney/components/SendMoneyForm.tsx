@@ -11,11 +11,12 @@ import { useUser } from "../../../hooks/useUser";
 import { getMe } from "../../../api/auth";
 import { User } from "../../../model/User";
 import { storeUserData } from "../../../utils/storage";
+import ErrorTexts from "../../../components/ErrorTexts";
 
 const SendMoneyForm: React.FC = () => {
   const {
     user: { token },
-    setUser
+    setUser,
   } = useUser();
 
   const handleSend = async (data: any) => {
@@ -71,6 +72,9 @@ const SendMoneyForm: React.FC = () => {
               keyboardType="email-address"
               errorMessage={touched.email && errors.email ? errors.email : ""}
             />
+            {touched.email && errors.email && (
+              <ErrorTexts message={errors.email} />
+            )}
 
             <FormInput
               label="Amount"

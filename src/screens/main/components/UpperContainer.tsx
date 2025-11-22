@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
 import DashboardHeader from "./DashboardHeader";
 import BalanceContainer from "./BalanceContainer";

@@ -10,3 +10,5 @@ const KoinSaveLogo: React.FC = () => {
     />
   );
 };
+
+export default KoinSaveLogo
