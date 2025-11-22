@@ -37,9 +37,11 @@ const AuthBottomTexts: React.FC<{ isLogin?: boolean }> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    borderWidth: 1,
+    padding: 10,
   },
-  text: {},
+  text: {
+    fontSize: 14
+  },
 });
 
 export default AuthBottomTexts;

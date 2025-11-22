@@ -1,11 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, } from "react-native";
 import { Formik } from "formik";
 
 import FormInput from "../../../components/FormInput";
 import { SendMoneySchema } from "../../../Schemas/sendMoneySchema";
 import Button from "../../../components/Button";
-import SendMoneySummary from "./SendMoneySummary";
 import { sendMoney } from "../../../api/transactions";
 import { useUser } from "../../../hooks/useUser";
 import { getMe } from "../../../api/auth";

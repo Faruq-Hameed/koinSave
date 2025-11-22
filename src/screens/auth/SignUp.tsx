@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { View, StyleSheet, Image, Text } from "react-native";
 import FormInput from "../../components/FormInput";
@@ -7,7 +7,6 @@ import AuthHeaderBox from "../../components/AuthHeaderBox";
 import AuthBottomTexts from "../../components/AuthBottomText";
 import { Formik } from "formik";
 import { SignUpSchema } from "../../Schemas/userSchema";
-import ErrorTexts from "../../components/ErrorTexts";
 import Button from "../../components/Button";
 import { signup } from "../../api/auth";
 import { User } from "../../model/User";
@@ -15,16 +14,28 @@ import { useUser } from "../../hooks/useUser";
 import { storeUserData } from "../../utils/storage";
 
 const SignUpScreen: React.FC = () => {
-  const {setUser} = useUser()
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { setUser } = useUser();
   const handleSignup = async (data: Partial<User>) => {
     try {
       const res = await signup(data);
-      await storeUserData({...res.user, ...res.token})
-      setUser({...res.data})//this will caused stack switch to dashboard
-      alert("Signup success!");
-
+      const user: User = {
+        firstName: res.user.firstName,
+        lastName: res.user.lastName,
+        balance: (res.user.balance as number).toString(),
+        email: res.user.email,
+        token: res.token as string,
+      };
+      await storeUserData(user);
+      setUser(user); //this will caused stack switch to dashboard
+      setIsLoading(true);
     } catch (err: any) {
+      setIsLoading(false);
+
       alert(err.response?.data?.msg || "Signup failed");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -39,7 +50,9 @@ const SignUpScreen: React.FC = () => {
         }}
         validationSchema={SignUpSchema}
         onSubmit={(values) => {
-          handleSignup(values )
+          setIsLoading(true);
+          console.log("sign up hit");
+          handleSignup(values);
         }}
       >
         {({
@@ -58,10 +71,11 @@ const SignUpScreen: React.FC = () => {
               onChangeText={handleChange("firstName")}
               onBlur={handleBlur("firstName")}
               onFocus={() => {}}
+              errorMessage={
+                touched.firstName && errors.firstName ? errors.firstName : ""
+              }
             />
-            {touched.firstName && errors.firstName && (
-              <ErrorTexts message={errors.firstName} />
-            )}
+
             <FormInput
               label="Lastname"
               value={values.lastName}
@@ -69,10 +83,13 @@ const SignUpScreen: React.FC = () => {
               onBlur={handleBlur("lastName")}
               placeholder="Enter your last name"
               onFocus={() => {}}
+              errorMessage={
+                touched.lastName && errors.lastName ? errors.lastName : ""
+              }
             />
-            {touched.lastName && errors.lastName && (
+            {/* {touched.lastName && errors.lastName && (
               <ErrorTexts message={errors.lastName} />
-            )}
+            )} */}
             <FormInput
               label="Enter email"
               value={values.email}
@@ -81,25 +98,29 @@ const SignUpScreen: React.FC = () => {
               onBlur={handleBlur("email")}
               onFocus={() => {}}
               keyboardType="email-address"
+              errorMessage={touched.email && errors.email ? errors.email : ""}
             />
-            {touched.email && errors.email && (
+            {/* {touched.email && errors.email && (
               <ErrorTexts message={errors.email} />
-            )}
-              <FormInput
-                label="Passcode"
-                value={values.passcode}
-                placeholder="Enter your passcode"
-                onChangeText={handleChange("passcode")}
-                onBlur={handleBlur("passcode")}
-                onFocus={() => {}}
-                keyboardType="phone-pad"
-                errorMessage={
-                  touched.passcode && errors.passcode ? errors.passcode : ""
-                }
-              />
+            )} */}
+            <FormInput
+              label="Passcode"
+              value={values.passcode}
+              placeholder="Enter your passcode"
+              onChangeText={handleChange("passcode")}
+              onBlur={handleBlur("passcode")}
+              onFocus={() => {}}
+              keyboardType="phone-pad"
+              errorMessage={
+                touched.passcode && errors.passcode ? errors.passcode : ""
+              }
+            />
             <Button
-              title="Sign Up"
-              onPress={handleSubmit}
+              title={isLoading ? "Please wait .." : "Login"}
+              onPress={() => {
+                handleSubmit();
+              }}
+              disable={isLoading}
             />
           </View>
         )}

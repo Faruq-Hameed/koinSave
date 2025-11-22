@@ -23,16 +23,20 @@ const LoginScreen: React.FC = () => {
       const user: User = {
         firstName: res.user.firstName,
         lastName: res.user.lastName,
-        balance: res.user.balance,
+        balance: (res.user.balance as number).toString(),
         email: res.user.email,
         token: res.token as string,
       };
+      console.log({user})
       await storeUserData(user);
       setUser(user); //this will caused stack switch to dashboard
       setIsLoading(true);
-      alert("Signup success!");
     } catch (err: any) {
-      alert(err.response?.data?.msg || "Signup failed");
+      setIsLoading(false);
+
+      // alert(err.response?.data?.msg || "Login failed");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -48,6 +52,7 @@ const LoginScreen: React.FC = () => {
           onSubmit={(values) => {
             console.log("login api called");
             // initiateSignUp(values);
+            setIsLoading(true);
             handleLogin(values);
           }}
         >
@@ -65,7 +70,11 @@ const LoginScreen: React.FC = () => {
                 value={values.email}
                 onChangeText={handleChange("email")}
                 placeholder="Enter your email"
-                onBlur={handleBlur("email")}
+                onBlur={() => {
+                  handleBlur("email");
+                  setIsLoading(false);
+                  setIsLoading(false);
+                }}
                 onFocus={() => {}}
                 keyboardType="email-address"
                 errorMessage={touched.email && errors.email ? errors.email : ""}
@@ -76,7 +85,11 @@ const LoginScreen: React.FC = () => {
                 value={values.passcode}
                 placeholder="Enter your passcode"
                 onChangeText={handleChange("passcode")}
-                onBlur={handleBlur("passcode")}
+                onBlur={() => {
+                  handleBlur("passcode");
+                  setIsLoading(false);
+                  setIsLoading(false);
+                }}
                 onFocus={() => {}}
                 keyboardType="phone-pad"
                 errorMessage={
@@ -85,15 +98,11 @@ const LoginScreen: React.FC = () => {
               />
               <Button
                 title={isLoading ? "Please wait .." : "Login"}
-                onPress={(e) => {
-                  console.log({errors})
-                  if (!errors || !errors.passcode && !errors.email) {
-                    console.log("no error")
-                    setIsLoading(true);
-                    handleSubmit(e);
-                  }
+                onPress={() => {
+                  handleSubmit();
                 }}
-                // disable={errors || isLoading ? true : false}
+              disable={isLoading}
+
               />
             </View>
           )}
