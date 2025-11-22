@@ -12,7 +12,6 @@ export const login = async (data: Partial<User>) => {
   const res = await API.post("/auths/login", data, {
     headers: { "Content-Type": "application/json" },
   });
-  console.log(res.data)
   return res.data;
 
 };

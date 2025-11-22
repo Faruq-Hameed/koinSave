@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useUser } from "../../../hooks/useUser";
+import { useFocusEffect } from "@react-navigation/native";
+import { getMe } from "../../../api/auth";
+import { storeUserData, updateUseBalanceData } from "../../../utils/storage";
 
-const BalanceContainer: React.FC<{ balance: string }> = ({ balance }) => {
+const BalanceContainer: React.FC = () => {
+   const [bal, setBal] = useState("0");
+  const { user } = useUser();
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTransactions = async () => {
+        try {
+          const res = await getMe(user.token);
+          const balance = String(res.user?.balance ?? 0);
+          setBal(balance);
+          console.log({ balance });
+
+          await storeUserData({ ...user, balance });
+          updateUseBalanceData(balance);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchTransactions();
+    }, [user]) // depend on user, 
+  );
+
   const [isUsd, setIsUsd] = useState(true);
   const toggleCurrency = () => {
     setIsUsd((prev) => !prev);
   };
-  const nairaAmount = parseFloat(balance); //converted the balance to number
+  const nairaAmount = parseFloat(bal); //converted the balance to number
   const exchangeRate = 1000;
-  const usdAmount = (nairaAmount / exchangeRate).toFixed(2)??0;
+  const usdAmount = (nairaAmount / exchangeRate).toFixed(2) ?? 0;
 
   return (
     <View style={styles.container}>

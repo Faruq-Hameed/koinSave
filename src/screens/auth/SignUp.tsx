@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View,} from "react-native";
 import FormInput from "../../components/FormInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthHeaderBox from "../../components/AuthHeaderBox";

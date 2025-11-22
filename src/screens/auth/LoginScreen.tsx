@@ -27,7 +27,6 @@ const LoginScreen: React.FC = () => {
         email: res.user.email,
         token: res.token as string,
       };
-      console.log({user})
       await storeUserData(user);
       setUser(user); //this will caused stack switch to dashboard
       setIsLoading(true);
@@ -99,6 +98,8 @@ const LoginScreen: React.FC = () => {
               <Button
                 title={isLoading ? "Please wait .." : "Login"}
                 onPress={() => {
+            console.log("login api hit");
+
                   handleSubmit();
                 }}
               disable={isLoading}

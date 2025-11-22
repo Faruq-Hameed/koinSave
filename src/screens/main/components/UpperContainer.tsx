@@ -12,7 +12,7 @@ const UpperContainer: React.FC = () => {
   return (
     <View style={styles.container}>
       <DashboardHeader firstName={firstName} lastName={lastName} />
-      <BalanceContainer balance={balance} />
+      <BalanceContainer />
     </View>
   );
 };

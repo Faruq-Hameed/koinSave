@@ -102,14 +102,12 @@ const SendMoneyForm: React.FC = () => {
             {/* <SendMoneySummary amount={values.amount}/> */}
             <Button
               title="Send Now"
-              onPress={() => {
-                console.log("send button submitted");
-              }}
+              onPress={handleSubmit}
               marginTop={30}
             />
             <Button
               title="Cancel"
-              onPress={handleSubmit}
+              onPress={()=>{}}
               marginTop={20}
               bgColor="white"
               color="black"

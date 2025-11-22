@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text } from "react-native";
 
 import AuthNavigator from "./AuthNavigator";
 import MainNavigator from "./MainNavigator";
 import { useUser } from "../hooks/useUser";
+import { getUserData } from "../utils/storage";
 
 //This contain the navigation stacks for the app
 export type RootStackParamList = {
@@ -16,9 +17,28 @@ export type RootStackParamList = {
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStackNavigator() {
+  const [loading, setLoading] = useState(true);
+  const { user, setUser } = useUser();
+
   // const { isLoggedIn, loading } = useAuth();
-  const {user, setUser} = useUser()
-  const { isLoggedIn, loading } = { isLoggedIn: false, loading: false }; // Placeholder for auth state
+  const loadingUserData = async () => {
+    const user = await getUserData();
+    if (user) {
+      setUser({
+        firstName: user.firstName as string,
+        lastName: user.lastName as string,
+        balance: (user.balance as string) ?? "0",
+        email: user.email as string,
+        token: user.token as string,
+      });
+    }
+  };
+
+  useEffect(() => {
+    loadingUserData();
+    setLoading(false);
+  }, []);
+
   // Show a loading screen while checking auth state
   if (loading) {
     return (
@@ -27,6 +47,7 @@ export default function RootStackNavigator() {
       </View>
     );
   }
+  else
   //Render the appropriate stack based on auth state
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>

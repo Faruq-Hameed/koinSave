@@ -1,16 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ArrowCircle from "../../../components/ArrowCircle";
+import { ITransaction } from "./TransactionContainer";
 
-type Transaction = {
-  id: string;
-  description: string;
-  date: string;
-  type: string;
-  amount: number;
-};
 
-const TransactionItem: React.FC<{ transaction: Transaction }> = ({
+const TransactionItem: React.FC<{ transaction: ITransaction }> = ({
   transaction,
 }) => {
   const isCredit = transaction.type === "credit";
@@ -22,8 +16,8 @@ const TransactionItem: React.FC<{ transaction: Transaction }> = ({
       <ArrowCircle isArrowUp={isCredit} size={30}/>
 
       <View style={styles.textBlock}>
-        <Text style={styles.description}>{transaction.description}</Text>
-        <Text style={styles.date}>{transaction.date}</Text>
+        <Text style={styles.description}>{transaction.purpose}</Text>
+        <Text style={styles.date}>{transaction.createdAt}</Text>
       </View>
       <Text style={[styles.amount, { color }]}>
         {sign}₦{transaction.amount.toLocaleString()}

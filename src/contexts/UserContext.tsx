@@ -22,7 +22,6 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser);
   const resetUser = ()=> setUser(defaultUser);
-
   return (
     <UserContext.Provider value={{ user, setUser, resetUser }}>
       {children}

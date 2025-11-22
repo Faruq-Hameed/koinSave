@@ -4,14 +4,32 @@ import FormInput from "../components/FormInput";
 import Button from "../components/Button";
 import { Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { addMoney } from "../api/transactions";
+import { useUser } from "../hooks/useUser";
+import { useNavigation } from "@react-navigation/native";
 
 const AddMoneyScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false); //handle loading state in button
+  const {
+    user: { token },
+  } = useUser();
   const [amount, setAmount] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const validateAmount = () => {
-    if (!amount || !parseFloat(amount) || parseFloat(amount) < 1) {
+  const handleDeposit = async () => {
+    const amountInNumber = parseFloat(amount);
+    if (!amountInNumber || amountInNumber < 1) {
       setErrorText("Amount must be greater than 0");
+    }
+    try {
+      setIsLoading(true);
+      await addMoney(token, amountInNumber);
+      navigation.goBack();
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -32,11 +50,12 @@ const AddMoneyScreen: React.FC = () => {
         errorMessage={errorText}
       />
       <Button
-        title="Deposit now"
+        title={isLoading ? "Depositing .." : "Deposit now"}
         onPress={() => {
-          validateAmount();
+          handleDeposit();
           console.log("Money deposited");
         }}
+        disable={isLoading}
       />
     </SafeAreaView>
   );
