@@ -6,10 +6,6 @@ import { UserProvider } from "./src/contexts/UserContext";
 
 export default function App() {
   return (
-    // <Image
-    //   source={require("./assets/splash-icon.png")}
-    //   style={{ width: 100, height: 100 }}
-    // />
     <UserProvider>
       <NavigationContainer>
         <RootStackNavigator />
@@ -18,11 +14,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

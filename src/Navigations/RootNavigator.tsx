@@ -4,9 +4,7 @@ import { View, Text } from "react-native";
 
 import AuthNavigator from "./AuthNavigator";
 import MainNavigator from "./MainNavigator";
-import { storeUserData, getUserData } from "../utils/storage";
 import { useUser } from "../hooks/useUser";
-import { User } from "../model/User";
 
 //This contain the navigation stacks for the app
 export type RootStackParamList = {
@@ -20,27 +18,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 export default function RootStackNavigator() {
   // const { isLoggedIn, loading } = useAuth();
   const {user, setUser} = useUser()
-  const Example = () => {
-    useEffect(() => {
-      const init = async () => {
-        const user = await getUserData();
-        if(user){
-          setUser(user as  User)
-        }
-        console.log("User:", user);
-      };
-      init();
-    }, [user]);
-
-    return (
-      <View>
-        <Text>Check console for stored user data</Text>
-      </View>
-    );
-  };
-
   const { isLoggedIn, loading } = { isLoggedIn: false, loading: false }; // Placeholder for auth state
-
   // Show a loading screen while checking auth state
   if (loading) {
     return (
@@ -49,7 +27,6 @@ export default function RootStackNavigator() {
       </View>
     );
   }
-
   //Render the appropriate stack based on auth state
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
