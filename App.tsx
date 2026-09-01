@@ -5,7 +5,7 @@ import RootStackNavigator from "./src/Navigations/RootNavigator";
 import { UserProvider } from "./src/contexts/UserContext";
 
 export default function App() {
-  return ( 
+  return (
     <UserProvider>
       <NavigationContainer>
         <RootStackNavigator />
